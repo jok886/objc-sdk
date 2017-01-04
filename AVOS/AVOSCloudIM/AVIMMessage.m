@@ -41,6 +41,7 @@
         message.content = _content;
         message.sendTimestamp = _sendTimestamp;
         message.deliveredTimestamp = _deliveredTimestamp;
+        message.readTimestamp = _readTimestamp;
         //        message.requestReceipt = _requestReceipt;
     }
     return message;
@@ -60,6 +61,9 @@
     if (self.deliveredTimestamp != 0) {
         object.deliveredTimestamp = self.deliveredTimestamp;
     }
+    if (self.readTimestamp != 0) {
+        object.readTimestamp = self.readTimestamp;
+    }
     NSData *data = [object messagePack];
     [coder encodeObject:data forKey:@"data"];
     [coder encodeObject:self.localClientId forKey:NSStringFromSelector(@selector(localClientId))];
@@ -76,6 +80,7 @@
         self.content = object.content;
         self.sendTimestamp = object.sendTimestamp;
         self.deliveredTimestamp = object.deliveredTimestamp;
+        self.readTimestamp = object.readTimestamp;
         self.localClientId = [coder decodeObjectForKey:NSStringFromSelector(@selector(localClientId))];
     }
     return self;
