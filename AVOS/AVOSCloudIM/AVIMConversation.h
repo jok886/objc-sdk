@@ -158,10 +158,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unmuteWithCallback:(AVIMBooleanResultBlock)callback;
 
 /*!
- 标记该会话已读。
- 将服务端该会话的未读消息数置零。
+ 标记该消息已读。
+ @param message - 需要标记为已读状态的消息
+ @attention 服务端会将该消息之前的消息状态都标记为已读。
  */
-- (void)markAsReadInBackground;
+- (void)markAsReadInBackgroundForMessage:(AVIMMessage *)message;
+
+/*!
+ 标记该消息已读。
+ @param message - 需要标记为已读状态的消息
+ @param callback － 结果回调
+ @attention 服务端会将该消息之前的消息状态都标记为已读。
+ */
+- (void)markAsReadInBackgroundForMessage:(AVIMMessage *)message callback:(AVIMBooleanResultBlock)callback;
 
 /*!
  邀请新成员加入对话。
@@ -270,10 +279,21 @@ NS_ASSUME_NONNULL_BEGIN
                     timestamp:(int64_t)timestamp
                         limit:(NSUInteger)limit
                      callback:(AVIMArrayResultBlock)callback;
+/*!
+ * 拉取服务器最新的回执数据。
+ * 该方法仅对“单聊”(也即：成员数为2的对话)有效
+ */
+- (void)fetchLatestReceiptTimestampIfNeededWithCallback:(AVIMBooleanResultBlock)callback;
 
 @end
 
 @interface AVIMConversation (AVDeprecated)
+
+/*!
+ 标记该会话已读。
+ 将服务端该会话的未读消息数置零。
+ */
+- (void)markAsReadInBackground AVIM_DEPRECATED("Deprecated in AVOSCloudIM SDK 3.8.0. Use -[AVIMConversation markAsReadInBackgroundForMessage:callback:] instead.");
 
 /*!
  往对话中发送消息。

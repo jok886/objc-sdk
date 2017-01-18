@@ -191,6 +191,17 @@
     WAIT;
 }
 
+- (void)testMarkAsRead {
+    __weak AVIMConversation *conversation = self.conversation;
+    [conversation queryMessagesFromServerWithLimit:10 callback:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        XCTAssertTrue(objects.count > 0);
+        AVIMMessage *message = [objects lastObject];
+        [conversation markAsReadInBackgroundForMessage:message];
+        NOTIFY
+    }];
+    WAIT;
+}
+
 - (void)testConversationMembersUpdate {
     __weak AVIMConversation *conversation = [self conversationForUpdate];
     [conversation addMembersWithClientIds:@[ AVIM_TEST_ClinetID_Peer_1 ] callback:^(BOOL succeeded, NSError *error) {
