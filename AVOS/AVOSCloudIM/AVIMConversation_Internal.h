@@ -27,6 +27,10 @@
 @property(nonatomic, assign) BOOL          muted;           // 静音状态
 @property(nonatomic, assign) BOOL          transient;       // 是否为临时会话（开放群组）
 
+@property (nonatomic, assign) int64_t latestReadTimestampFromPeer;
+
+@property (nonatomic, assign) int64_t latestDeliveredTimestampFromPeer;
+
 //@property(nonatomic, strong)AVIMConversationUpdateBuilder *updateBuilder;
 - (instancetype)initWithConversationId:(NSString *)conversationId;
 - (void)setConversationId:(NSString *)conversationId;
